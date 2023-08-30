@@ -10,7 +10,7 @@ const RegisterPage = () => {
         <Input placeholder="Email address" />
         <Input placeholder="Password" />
 
-        <Button fullWidth>Login</Button>
+        <Button fullWidth>Register</Button>
       </form>
     </div>
   );
