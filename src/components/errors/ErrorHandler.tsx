@@ -33,14 +33,14 @@ const ErrorHandler = ({ statusCode = 500, title = "Server Error" }: IProps) => {
         <div className="flex items-center justify-center space-x-4 my-10">
           <Link
             to={"/"}
-            className="inline-block bg-[#149eca] p-2 text-white hover:!text-white rounded-md"
+            className="inline-block bg-indigo-600 p-2 text-white hover:!text-white rounded-md"
             reloadDocument
           >
             Home
           </Link>
           <Link
             to={pathname}
-            className="inline-block bg-[#149eca] p-2 text-white hover:!text-white rounded-md"
+            className="inline-block bg-indigo-600 p-2 text-white hover:!text-white rounded-md"
             reloadDocument
           >
             Refresh

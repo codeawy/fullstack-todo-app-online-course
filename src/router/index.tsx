@@ -5,6 +5,7 @@ import RootLayout from "../pages/Layout";
 import ErrorHandler from "../components/errors/ErrorHandler";
 import HomePage from "../pages";
 import LoginPage from "../pages/Login";
+import RegisterPage from "../pages/Register";
 
 const isLoggedIn = false;
 const userData: { email: string } | null = isLoggedIn ? { email: "email@gmail.com" } : null;
@@ -27,6 +28,14 @@ const router = createBrowserRouter(
           element={
             <ProtectedRoute isAllowed={!isLoggedIn} redirectPath="/" data={userData}>
               <LoginPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="register"
+          element={
+            <ProtectedRoute isAllowed={!isLoggedIn} redirectPath="/login" data={userData}>
+              <RegisterPage />
             </ProtectedRoute>
           }
         />

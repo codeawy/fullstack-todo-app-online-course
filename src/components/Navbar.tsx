@@ -7,9 +7,14 @@ const Navbar = () => {
         <li className="text-white duration-200 font-semibold text-lg">
           <NavLink to="/">Home</NavLink>
         </li>
-        <li className="text-white duration-200 font-semibold text-lg">
-          <NavLink to="/login">Login</NavLink>
-        </li>
+        <p className="flex items-center space-x-3">
+          <li className="text-white duration-200 font-semibold text-lg">
+            <NavLink to="/register">Register</NavLink>
+          </li>
+          <li className="text-white duration-200 font-semibold text-lg">
+            <NavLink to="/login">Login</NavLink>
+          </li>
+        </p>
       </ul>
     </nav>
   );
