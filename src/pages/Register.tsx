@@ -2,6 +2,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import InputErrorMessage from "../components/InputErrorMessage";
+import axiosInstance from "../config/axios.config";
 
 interface IFormInput {
   username: string;
@@ -15,7 +16,16 @@ const RegisterPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInput>();
-  const onSubmit: SubmitHandler<IFormInput> = data => console.log("DATA", data);
+
+  const onSubmit: SubmitHandler<IFormInput> = async data => {
+    console.log(data);
+
+    try {
+      await axiosInstance.post("/auth/local/register", data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="max-w-md mx-auto">
@@ -53,6 +63,7 @@ const RegisterPage = () => {
               required: true,
               minLength: 6,
             })}
+            type="password"
           />
           {errors?.password && errors.password.type === "required" && <InputErrorMessage msg="Password is required." />}
           {errors?.password && errors.password.type === "minLength" && (
