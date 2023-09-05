@@ -1,4 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
+import Button from "./ui/Button";
 
 const Navbar = () => {
   const { pathname } = useLocation();
@@ -15,22 +16,24 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="max-w-lg mx-auto mt-7 mb-20 bg-indigo-600 px-3 py-5 rounded-md">
+    <nav className="max-w-2xl mx-auto mt-7 mb-20 px-3 py-5">
       <ul className="flex items-center justify-between">
-        <li className="text-white duration-200 font-semibold text-lg">
+        <li className="duration-200 font-semibold text-lg">
           <NavLink to="/">Home</NavLink>
         </li>
 
         {userData ? (
-          <div className="text-white space-x-2">
-            <span>{userData.user.email}</span>
-            <span className="cursor-pointer" onClick={onLogout}>
+          <div className="flex items-center text-indigo-600 space-x-2">
+            <li className="duration-200 text-lg">
+              <NavLink to="/profile">Profile</NavLink>
+            </li>
+            <Button className="cursor-pointer" size={"sm"} onClick={onLogout}>
               Logout
-            </span>
+            </Button>
           </div>
         ) : (
           <p className="flex items-center space-x-3">
-            <li className="text-white duration-200 font-semibold text-lg">
+            <li className="text-indigo-600 duration-200 font-semibold text-lg">
               <NavLink to="/register">Register</NavLink>
             </li>
             <li className="text-white duration-200 font-semibold text-lg">
