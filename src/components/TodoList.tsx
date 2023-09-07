@@ -1,13 +1,13 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { faker } from "@faker-js/faker";
+import { ChangeEvent, FormEvent, useState } from "react";
+import axiosInstance from "../config/axios.config";
 import useCustomQuery from "../hooks/useCustomQuery";
 import { ITodo } from "../interfaces";
+import TodoSkeleton from "./TodoSkeleton";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
 import Modal from "./ui/Modal";
 import Textarea from "./ui/Textarea";
-import axiosInstance from "../config/axios.config";
-import TodoSkeleton from "./TodoSkeleton";
-import { faker } from "@faker-js/faker";
 
 const TodoList = () => {
   const storageKey = "loggedInUser";
@@ -220,22 +220,24 @@ const TodoList = () => {
 
       {data.todos.length ? (
         data.todos.map((todo: ITodo) => (
-          <div
-            key={todo.id}
-            className="flex items-center justify-between hover:bg-gray-100 duration-300 p-3 rounded-md even:bg-gray-100"
-          >
-            <p className="w-full font-semibold">
-              {todo.id} - {todo.title}
-            </p>
-            <div className="flex items-center justify-end w-full space-x-3">
-              <Button size={"sm"} onClick={() => onOpenEditModal(todo)}>
-                Edit
-              </Button>
-              <Button variant={"danger"} size={"sm"} onClick={() => openConfirmModal(todo)}>
-                Remove
-              </Button>
+          <>
+            <div
+              key={todo.id}
+              className="flex items-center justify-between hover:bg-gray-100 duration-300 p-3 rounded-md even:bg-gray-100"
+            >
+              <p className="w-full font-semibold">
+                {todo.id} - {todo.title}
+              </p>
+              <div className="flex items-center justify-end w-full space-x-3">
+                <Button size={"sm"} onClick={() => onOpenEditModal(todo)}>
+                  Edit
+                </Button>
+                <Button variant={"danger"} size={"sm"} onClick={() => openConfirmModal(todo)}>
+                  Remove
+                </Button>
+              </div>
             </div>
-          </div>
+          </>
         ))
       ) : (
         <h3>No todos yet!</h3>
