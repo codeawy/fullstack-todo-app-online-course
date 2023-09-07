@@ -1,9 +1,18 @@
-const Paginator = () => {
+interface IProps {
+  page: number;
+  pageCount: number;
+  onClickPrev: () => void;
+  onClickNext: () => void;
+}
+
+const Paginator = ({ page = 1, pageCount, onClickPrev, onClickNext }: IProps) => {
   return (
     <div className="flex justify-center mx-auto">
       <button
         type="button"
-        className="bg-gray-800 text-white rounded-l-md border-r border-gray-100 py-2 hover:bg-indigo-700 duration-300 hover:text-white px-3"
+        className="bg-gray-800 text-white rounded-l-md border-r border-gray-100 py-2 hover:bg-indigo-700 duration-300 hover:text-white px-3 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:hover:bg-gray-400"
+        disabled={page === 1}
+        onClick={onClickPrev}
       >
         <div className="flex flex-row align-middle">
           <svg className="w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -16,9 +25,12 @@ const Paginator = () => {
           <p className="ml-2">Prev</p>
         </div>
       </button>
+
       <button
         type="button"
-        className="bg-gray-800 text-white rounded-r-md py-2 border-l border-gray-200 hover:bg-indigo-700 duration-300 hover:text-white px-3"
+        className="bg-gray-800 text-white rounded-r-md py-2 border-l border-gray-200 hover:bg-indigo-700 duration-300 hover:text-white px-3 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:hover:bg-gray-400"
+        disabled={page === pageCount}
+        onClick={onClickNext}
       >
         <div className="flex flex-row align-middle">
           <span className="mr-2">Next</span>

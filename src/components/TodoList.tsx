@@ -1,8 +1,8 @@
-import { faker } from "@faker-js/faker";
 import { ChangeEvent, FormEvent, useState } from "react";
 import axiosInstance from "../config/axios.config";
 import useCustomQuery from "../hooks/useCustomQuery";
 import { ITodo } from "../interfaces";
+import { onGenerateTodos } from "../utils/functions";
 import TodoSkeleton from "./TodoSkeleton";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
@@ -94,24 +94,6 @@ const TodoList = () => {
       ...todoToEdit,
       [name]: value,
     });
-  };
-
-  const onGenerateTodos = async () => {
-    for (let i = 0; i < 100; i++) {
-      try {
-        await axiosInstance.post(
-          `/todos`,
-          { data: { title: faker.word.words(5), description: faker.lorem.paragraph(2), user: [userData.user.id] } },
-          {
-            headers: {
-              Authorization: `Bearer ${userData.jwt}`,
-            },
-          }
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    }
   };
 
   const onSubmitRemoveTodo = async () => {
