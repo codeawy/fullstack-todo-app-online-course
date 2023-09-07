@@ -13,6 +13,7 @@ const TodoList = () => {
   const userDataString = localStorage.getItem(storageKey);
   const userData = userDataString ? JSON.parse(userDataString) : null;
 
+  const [queryVersion, setQueryVersion] = useState(1);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
@@ -28,7 +29,7 @@ const TodoList = () => {
     description: "",
   });
   const { isLoading, data } = useAuthenticatedQuery({
-    queryKey: ["todoList", `${todoToEdit.id}`],
+    queryKey: ["todoList", `${queryVersion}`],
     url: "/users/me?populate=todos",
     config: {
       headers: {
@@ -104,6 +105,7 @@ const TodoList = () => {
 
       if (status === 200) {
         closeConfirmModal();
+        setQueryVersion(prev => prev + 1);
       }
     } catch (error) {
       console.log(error);
@@ -130,6 +132,7 @@ const TodoList = () => {
 
       if (status === 200) {
         onCloseAddModal();
+        setQueryVersion(prev => prev + 1);
       }
     } catch (error) {
       console.log(error);
@@ -158,6 +161,7 @@ const TodoList = () => {
 
       if (status === 200) {
         onCloseEditModal();
+        setQueryVersion(prev => prev + 1);
       }
     } catch (error) {
       console.log(error);
@@ -184,7 +188,7 @@ const TodoList = () => {
       </div>
 
       {data.todos.length ? (
-        data.todos.map((todo: ITodo) => (
+        data.todos.reverse().map((todo: ITodo) => (
           <div
             key={todo.id}
             className="flex items-center justify-between hover:bg-gray-100 duration-300 p-3 rounded-md even:bg-gray-100"
