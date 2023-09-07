@@ -11,15 +11,17 @@ const TodosPage = () => {
 
   const [page, setPage] = useState<number>(1);
 
-  const { isLoading, data } = useCustomQuery({
-    queryKey: ["paginatedTodos", `${page}`],
-    url: "/todos",
+  const { isLoading, data, isFetching } = useCustomQuery({
+    queryKey: [`todos-page-${page}`],
+    url: `/todos?pagination[pageSize]=10&pagination[page]=${page}`,
     config: {
       headers: {
         Authorization: `Bearer ${userData.jwt}`,
       },
     },
   });
+
+  console.log(isLoading, isFetching);
 
   // ** Handlers
   const onClickPrev = () => {
@@ -34,27 +36,34 @@ const TodosPage = () => {
   return (
     <section className="max-w-2xl mx-auto">
       <div className="flex items-center justify-center space-x-2">
-        <Button size={"sm"} onClick={onGenerateTodos}>
+        <Button size={"sm"} onClick={onGenerateTodos} title="Generate 100 records">
           Generate todos
         </Button>
       </div>
 
-      <div className="my-10 space-y-6">
+      <div className="my-10">
         {data.data.length ? (
-          data.data.map(({ id, attributes }: { id: number; attributes: { title: string } }, idx: number) => (
+          data.data.map(({ id, attributes }: { id: number; attributes: { title: string } }) => (
             <div
               key={id}
               className="flex items-center justify-between hover:bg-gray-100 duration-300 p-3 rounded-md even:bg-gray-100"
             >
               <h3 className="w-full font-semibold">
-                {id} - {idx + 1} - {attributes.title}
+                {id} - {attributes.title}
               </h3>
             </div>
           ))
         ) : (
           <h3>No todos yet!</h3>
         )}
-        <Paginator page={page} pageCount={3} onClickPrev={onClickPrev} onClickNext={onClickNext} />
+        <Paginator
+          page={page}
+          pageCount={data.meta.pagination.pageCount}
+          total={data.meta.pagination.total}
+          isLoading={isLoading || isFetching}
+          onClickPrev={onClickPrev}
+          onClickNext={onClickNext}
+        />
       </div>
     </section>
   );
