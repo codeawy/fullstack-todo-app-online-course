@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import useAuthenticatedQuery from "../hooks/useAuthenticatedQuery";
+import useCustomQuery from "../hooks/useCustomQuery";
 import { ITodo } from "../interfaces";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
@@ -28,7 +28,7 @@ const TodoList = () => {
     title: "",
     description: "",
   });
-  const { isLoading, data } = useAuthenticatedQuery({
+  const { isLoading, data } = useCustomQuery({
     queryKey: ["todoList", `${queryVersion}`],
     url: "/users/me?populate=todos",
     config: {
@@ -188,7 +188,7 @@ const TodoList = () => {
       </div>
 
       {data.todos.length ? (
-        data.todos.reverse().map((todo: ITodo) => (
+        data.todos.map((todo: ITodo) => (
           <div
             key={todo.id}
             className="flex items-center justify-between hover:bg-gray-100 duration-300 p-3 rounded-md even:bg-gray-100"
@@ -211,7 +211,7 @@ const TodoList = () => {
       )}
 
       {/* Add todo modal */}
-      <Modal isOpen={isOpenAddModal} closeModal={onCloseAddModal} title="Edit this todo">
+      <Modal isOpen={isOpenAddModal} closeModal={onCloseAddModal} title="Add a new todo">
         <form className="space-y-3" onSubmit={submitAddTodoHandler}>
           <Input name="title" value={todoToAdd.title} onChange={onChangeAddTodoHandler} />
           <Textarea name="description" value={todoToAdd.description} onChange={onChangeAddTodoHandler} />
@@ -219,7 +219,7 @@ const TodoList = () => {
             <Button className="bg-indigo-700 hover:bg-indigo-800" isLoading={isUpdating}>
               Done
             </Button>
-            <Button variant={"cancel"} onClick={onCloseEditModal}>
+            <Button type="button" variant={"cancel"} onClick={onCloseAddModal}>
               Cancel
             </Button>
           </div>
@@ -235,7 +235,7 @@ const TodoList = () => {
             <Button className="bg-indigo-700 hover:bg-indigo-800" isLoading={isUpdating}>
               Update
             </Button>
-            <Button variant={"cancel"} onClick={onCloseEditModal}>
+            <Button type="button" variant={"cancel"} onClick={onCloseEditModal}>
               Cancel
             </Button>
           </div>
@@ -253,7 +253,7 @@ const TodoList = () => {
           <Button variant={"danger"} size={"sm"} onClick={onRemove}>
             Yes, remove
           </Button>
-          <Button variant={"cancel"} size={"sm"} onClick={closeConfirmModal}>
+          <Button type="button" variant={"cancel"} size={"sm"} onClick={closeConfirmModal}>
             Cancel
           </Button>
         </div>

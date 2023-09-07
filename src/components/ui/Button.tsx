@@ -34,11 +34,17 @@ const buttonVariants = cva(
 interface ButtonProps extends HTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   children: ReactNode;
   isLoading?: boolean;
+  type?: "submit" | "button" | "reset";
 }
 
-const Button = ({ variant, size, fullWidth, isLoading, className, children, ...props }: ButtonProps) => {
+const Button = ({ type, variant, size, fullWidth, isLoading, className, children, ...props }: ButtonProps) => {
   return (
-    <button className={cn(buttonVariants({ variant, size, fullWidth, className }))} {...props} disabled={isLoading}>
+    <button
+      type={type}
+      className={cn(buttonVariants({ variant, size, fullWidth, className }))}
+      {...props}
+      disabled={isLoading}
+    >
       {isLoading ? (
         <svg
           className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
